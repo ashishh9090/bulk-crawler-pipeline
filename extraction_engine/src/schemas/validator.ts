@@ -1,20 +1,20 @@
-import AjvModule from 'ajv';
+import AjvModule, { type ErrorObject } from 'ajv';
 import addFormatsModule from 'ajv-formats';
 import { CanonicalJsonSchema } from '../types/index.js';
 import { SchemaValidationError } from '../utils/errors.js';
 
-// Handle ESM / CJS default import differences gracefully
-const Ajv = (AjvModule as unknown as { default?: typeof AjvModule }).default || AjvModule;
-const addFormats =
-  (addFormatsModule as unknown as { default?: typeof addFormatsModule }).default ||
-  addFormatsModule;
+// Handle ESM / CJS interop cleanly across build targets
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const AjvClass: any = (AjvModule as any).default || AjvModule;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const addFormatsFunc: any = (addFormatsModule as any).default || addFormatsModule;
 
-const ajv = new Ajv({
+const ajv = new AjvClass({
   allErrors: true,
-  strict: false, // accommodate flexible properties in canonical schemas
+  strict: false,
   coerceTypes: false,
 });
-addFormats(ajv);
+addFormatsFunc(ajv);
 
 export interface ValidationResult<T = unknown> {
   valid: boolean;
@@ -38,9 +38,9 @@ export function validateSchema<T = unknown>(
     };
   }
 
-  const errors = validate.errors || [];
+  const errors: ErrorObject[] = (validate.errors as ErrorObject[]) || [];
   const formattedError = errors
-    .map((err) => `${err.instancePath || '/'} ${err.message || 'is invalid'}`)
+    .map((err: ErrorObject) => `${err.instancePath || '/'} ${err.message || 'is invalid'}`)
     .join('; ');
 
   return {

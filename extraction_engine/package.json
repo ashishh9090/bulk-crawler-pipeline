@@ -4,6 +4,10 @@
   "description": "Production-grade Multi-Tier LLM Extraction Engine with multi-provider fallback and canonical schema enforcement",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
+  "bin": {
+    "extract": "./bin/extract.js"
+  },
   "scripts": {
     "build": "tsc",
     "demo": "node dist/demo.js",
