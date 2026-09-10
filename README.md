@@ -388,3 +388,106 @@ npm test
 npm run build
 ```
 
+---
+
+## Phase IV: Deterministic Entity Resolution (`crawler/entity_resolution/`)
+
+High-precision, deterministic entity resolution engine that maps company and product variations (e.g. *"OpenAI"*, *"OpenAI, Inc."*, *"Open AI"*, *"OpenAI OpCo LLC"*) to a single canonical entity (*"OpenAI"*) without using LLM guesses or fabricating data.
+
+### 1. Seed Database (50+ Real AI Startups)
+- Stored in `crawler/entity_resolution/seed_data.json` (mirrored in `extraction_engine/src/entity_resolution/seed_data.json`).
+- Covers 52 real-world AI companies (OpenAI, Anthropic, Cohere, Mistral AI, Hugging Face, Scale AI, Databricks, Perplexity AI, Runway, Stability AI, ElevenLabs, Midjourney, etc.).
+- Contains verified legal aliases, precomputed normalized aliases, official domains, and verification registry URLs.
+
+### 2. Multi-Tier Deterministic Matching
+1. **Tier 1 (Official Domain)**: Direct match on canonical domain extracted from URL (`confidence = 1.0`).
+2. **Tier 2 (Exact Canonical Name)**: Case-insensitive canonical name match (`confidence = 1.0`).
+3. **Tier 3 (Exact Configured Alias)**: Direct lookup in verified alias index (`confidence = 1.0`).
+4. **Tier 4 (Exact Normalized Canonical Name)**: Unicode NFKD/NFC, suffix-stripped, AI-spacing normalized (`confidence = 0.99`).
+5. **Tier 5 (Exact Normalized Alias)**: Normalized alias match (`confidence = 0.98`).
+6. **Tier 6 (Conservative Token Similarity)**: Token set intersection with strict ambiguity guardrails (`confidence = 0.88 - 0.90`).
+7. **Ambiguity Protection**: Ambiguous candidates (`AMBIGUOUS_MULTI_CANDIDATE`) remain unresolved with `confidence = 0.0` and are logged for human review.
+
+### 3. Entity Mapping Log Audit Structure
+Every resolution attempt produces a structured record:
+```json
+{
+  "source_record_id": "STARTUP:1",
+  "raw_entity_name": "OpenAI, Inc.",
+  "normalized_entity_name": "openai",
+  "canonical_entity_id": "openai",
+  "canonical_entity_name": "OpenAI",
+  "match_strategy": "EXACT_NORMALIZED_ALIAS",
+  "confidence": 0.98,
+  "aliases_used": ["openai inc"],
+  "domains_used": [],
+  "resolver_version": "1.0.0",
+  "timestamp": "2026-09-11T00:00:00Z",
+  "unresolved_reason": null
+}
+```
+
+---
+
+## Phase V: Anti-Bot & Async Scale Strategy (`crawler/anti_bot/`)
+
+Comprehensive anti-bot compliance and rate-limiting framework designed for polite, respectful crawling without evading bot defenses:
+
+### 1. Ethical Compliance Standards
+- **Zero Evasion**: Does NOT bypass CAPTCHAs, spoof device fingerprints, steal session cookies, or break access controls.
+- **Polite Crawling**: Checks `robots.txt` asynchronously per domain, applies token-bucket rate limits, and redacts sensitive credentials.
+- **Fail Gracefully**: When an anti-bot challenge (403 or Cloudflare challenge) is detected, records a structured `BLOCKED_ACCESS` error record with telemetry and isolates the source so other targets continue unaffected.
+
+### 2. Source Capability Matrix (`capability_matrix.json`)
+Documents 15 core sources with:
+- `access_method`: API, RSS/Atom, sitemap, server HTML, or Playwright browser
+- `render_requirement`: Boolean flag indicating whether headless browser hydration is needed
+- `rate_limit_per_sec`: Permitted request throughput
+- `robots_status`: Verified robots.txt compliance status
+- `fallback_source_or_feed`: Configured alternative syndication feed
+- `block_handling_behavior`: Automatic failover and alerting
+
+### 3. Compliant Playwright Async Adapter (`js_rendered_adapter.py`)
+- **Resource Blocking**: Automatically aborts images, stylesheets, media, and fonts to conserve bandwidth.
+- **Isolated Contexts**: Ephemeral browser contexts destroyed immediately after extraction.
+- **Content-Hash Caching**: Prevents re-rendering identical URLs within TTL windows.
+
+---
+
+## Phase VI: Production Architecture & Multi-Sheet Export
+
+Production system design specification detailed in `architecture.md` and compiled to `architecture.pdf` (verified strictly &le; 3 pages).
+
+### Multi-Tab Excel Workbook & CSV Exports
+Run the multi-sheet exporter:
+```bash
+python -c "
+import asyncio
+from crawler.models.db import create_engine_and_session
+from crawler.export.multi_sheet_exporter import MultiSheetExporter
+
+async def export():
+    engine, session_factory = create_engine_and_session()
+    async with session_factory() as session:
+        exporter = MultiSheetExporter()
+        await exporter.export_all(session)
+
+asyncio.run(export())
+"
+```
+
+Generates:
+1. `exports/intelligence_ingestion_export.xlsx` (6 formatted tabs)
+2. `exports/startups.csv` (&ge; 1,000 source-backed rows)
+3. `exports/products.csv` (&ge; 1,000 source-backed rows)
+4. `exports/research_papers.csv` (&ge; 1,000 source-backed rows with timestamped GitHub stars)
+5. `exports/jobs.csv` (Verified fresh AI jobs within 24h)
+6. `exports/news.csv` (Verified fresh AI news within 24h)
+7. `exports/entity_mapping_log.csv` (Raw vs. canonical resolution mappings)
+
+### Google Sheets API Integration (`crawler/export/google_sheets.py`)
+To sync directly to Google Sheets:
+1. Set `GOOGLE_SHEETS_CREDENTIALS_JSON` and `GOOGLE_SHEET_ID` in `.env`.
+2. Install Google API client: `pip install google-api-python-client google-auth`.
+3. The exporter will automatically publish the sheets. If credentials are not supplied, the system exports locally to XLSX and CSVs without claiming false external publication.
+

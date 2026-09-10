@@ -116,10 +116,10 @@ class PaperContent(BaseModel):
         default=None,
         description="Linked GitHub repository URL, or null if none available"
     )
-    github_stars: int = Field(
-        default=0,
+    github_stars: Optional[int] = Field(
+        default=None,
         ge=0,
-        description="Exact live GitHub stargazers count from GitHub API"
+        description="Exact live GitHub stargazers count from GitHub API, or null"
     )
     published_date: str = Field(..., description="ISO-8601 publication date")
 
@@ -145,12 +145,57 @@ class ResearchPaperRecord(BaseModel):
     model_config = ConfigDict(extra="ignore")
     schemaVersion: Literal["1.0"] = "1.0"
     recordType: Literal["RESEARCH_PAPER"] = "RESEARCH_PAPER"
-    source: SourceModel
+    source: Optional[SourceModel] = None
     content: PaperContent
     collectedAt: str = Field(default_factory=current_iso_timestamp)
 
 
-AnyCrawlRecord = Union[StartupRecord, ProductRecord, ResearchPaperRecord]
+# ==============================================================================
+# JOB ENTITY SCHEMA (Phase IV/V)
+# ==============================================================================
+
+class JobEntityContent(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    company: str = Field(..., min_length=1, description="Hiring company or organization")
+    date: str = Field(..., description="ISO 8601 publication timestamp")
+    is_remote: bool = Field(default=False, description="Whether position is remote")
+    role_family: str = Field(..., min_length=1, description="Standardized role category e.g. Engineering, Research")
+
+
+class JobEntityRecord(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    schemaVersion: Literal["1.0"] = "1.0"
+    recordType: Literal["JOB"] = "JOB"
+    source: Optional[SourceModel] = None
+    content: JobEntityContent
+    collectedAt: str = Field(default_factory=current_iso_timestamp)
+
+
+# ==============================================================================
+# FIELD-LEVEL PROVENANCE AND AUDIT STRUCTURES
+# ==============================================================================
+
+class FieldProvenance(BaseModel):
+    """Tracks source evidence, confidence, and transformation provenance for any field."""
+    model_config = ConfigDict(extra="ignore")
+    source_url: str = Field(..., description="Legitimate verifiable origin URL")
+    source_field_or_selector: str = Field(..., description="DOM CSS selector, xpath, or API JSON field key")
+    extraction_timestamp: str = Field(default_factory=current_iso_timestamp, description="UTC ISO 8601 timestamp")
+    confidence: float = Field(default=1.0, ge=0.0, le=1.0, description="Extraction confidence score")
+    is_direct_source_data: bool = Field(default=True, description="True if raw source value, False if deterministic normalization")
+
+
+class RecordAuditProvenance(BaseModel):
+    """Complete field-level audit trail accompanying an output record."""
+    model_config = ConfigDict(extra="ignore")
+    record_id: str
+    record_type: str
+    source_url: str
+    fields: dict[str, FieldProvenance] = Field(default_factory=dict)
+    collected_at: str = Field(default_factory=current_iso_timestamp)
+
+
+AnyCrawlRecord = Union[StartupRecord, ProductRecord, ResearchPaperRecord, JobEntityRecord]
 
 # Phase II Signal Records
 from crawler.signals.models import NewsRecord, JobRecord  # noqa: E402

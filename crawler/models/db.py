@@ -206,6 +206,30 @@ class SourceRunHistoryModel(Base):
     summary_json = Column(Text, nullable=True)
 
 
+class EntityMappingLogModel(Base):
+    """Storage for Entity Mapping Logs (Phase IV Deterministic Entity Resolution)."""
+
+    __tablename__ = "entity_mapping_logs"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    source_record_id = Column(String(128), nullable=False, index=True)
+    raw_entity_name = Column(Text, nullable=False)
+    normalized_entity_name = Column(Text, nullable=False)
+    canonical_entity_id = Column(String(64), nullable=True, index=True)
+    canonical_entity_name = Column(Text, nullable=True)
+    match_strategy = Column(String(64), nullable=False, index=True)
+    confidence = Column(Float, nullable=False, default=0.0)
+    aliases_used = Column(Text, nullable=True)  # JSON list
+    domains_used = Column(Text, nullable=True)  # JSON list
+    resolver_version = Column(String(32), nullable=False, default="1.0.0")
+    timestamp = Column(UTCDateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+    unresolved_reason = Column(Text, nullable=True)
+
+    __table_args__ = (
+        Index("idx_entity_res_strat", "match_strategy", "canonical_entity_id"),
+    )
+
+
 def create_engine_and_session(db_url: Optional[str] = None) -> tuple[AsyncEngine, async_sessionmaker[AsyncSession]]:
     """Initializes async engine with WAL mode for SQLite and returns engine + session factory."""
     url = db_url or settings.database_url

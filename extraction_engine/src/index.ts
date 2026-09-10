@@ -20,3 +20,6 @@ export * from './utils/errors.js';
 export * from './utils/backoff.js';
 export * from './utils/json_repair.js';
 export * from './utils/logger.js';
+export * from './entity_resolution/normalizer.js';
+export * from './entity_resolution/resolver.js';
+export * from './entity_resolution/types.js';

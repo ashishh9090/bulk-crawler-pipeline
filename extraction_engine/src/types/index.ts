@@ -155,3 +155,73 @@ export interface Logger {
   warn(event: string, meta?: Partial<LogEntry>): void;
   error(event: string, meta?: Partial<LogEntry>): void;
 }
+
+// =============================================================================
+// Output Record Entities & Strict Provenance Models
+// =============================================================================
+
+export interface StartupEntity {
+  schemaVersion: '1.0';
+  recordType: 'STARTUP';
+  source: { name: string; url: string };
+  content: {
+    entityName: string;
+    data: { employeeCount?: number | null };
+  };
+  collectedAt: string;
+}
+
+export interface ProductEntity {
+  schemaVersion: '1.0';
+  recordType: 'PRODUCT';
+  source: { name: string; url: string };
+  content: {
+    startupName: string;
+    pricingModel: 'FREE' | 'FREEMIUM' | 'PAID' | 'ENTERPRISE' | null;
+  };
+  collectedAt: string;
+}
+
+export interface ResearchPaperEntity {
+  schemaVersion: '1.0';
+  recordType: 'RESEARCH_PAPER';
+  content: {
+    title: string;
+    authors: string[];
+    paper_url: string;
+    github_url?: string | null;
+    github_stars?: number | null;
+    published_date: string;
+  };
+}
+
+export interface JobEntity {
+  schemaVersion: '1.0';
+  recordType: 'JOB';
+  content: {
+    company: string;
+    date: string;
+    is_remote: boolean;
+    role_family: string;
+  };
+}
+
+export type AnyOutputEntity = StartupEntity | ProductEntity | ResearchPaperEntity | JobEntity;
+
+export interface FieldProvenance {
+  sourceUrl: string;
+  sourceFieldOrSelector: string;
+  extractionTimestamp: string;
+  confidence: number;
+  isDirectSourceData: boolean;
+}
+
+export interface RecordAuditProvenance {
+  recordId: string;
+  recordType: string;
+  sourceUrl: string;
+  fields: Record<string, FieldProvenance>;
+  collectedAt: string;
+}
+
+export * from '../entity_resolution/types.js';

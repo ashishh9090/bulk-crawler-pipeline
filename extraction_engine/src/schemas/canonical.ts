@@ -112,8 +112,39 @@ export const ResearchPaperCanonicalSchema: CanonicalJsonSchema = {
   },
 };
 
+export const JobCanonicalSchema: CanonicalJsonSchema = {
+  $schema: 'http://json-schema.org/draft-07/schema#',
+  title: 'JobRecord',
+  type: 'object',
+  required: ['schemaVersion', 'recordType', 'content'],
+  additionalProperties: true,
+  properties: {
+    schemaVersion: { type: 'string', enum: ['1.0'] },
+    recordType: { type: 'string', enum: ['JOB'] },
+    source: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        url: { type: 'string' },
+      },
+    },
+    content: {
+      type: 'object',
+      required: ['company', 'date', 'is_remote', 'role_family'],
+      properties: {
+        company: { type: 'string', minLength: 1 },
+        date: { type: 'string' },
+        is_remote: { type: 'boolean' },
+        role_family: { type: 'string', minLength: 1 },
+      },
+    },
+    collectedAt: { type: 'string' },
+  },
+};
+
 export const CanonicalSchemas = {
   STARTUP: StartupCanonicalSchema,
   PRODUCT: ProductCanonicalSchema,
   RESEARCH_PAPER: ResearchPaperCanonicalSchema,
+  JOB: JobCanonicalSchema,
 };

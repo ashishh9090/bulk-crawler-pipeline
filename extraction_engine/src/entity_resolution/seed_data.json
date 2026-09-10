@@ -1,0 +1,418 @@
+[
+  {
+    "canonical_id": "openai",
+    "canonical_name": "OpenAI",
+    "verified_aliases": ["OpenAI", "OpenAI, Inc.", "Open AI", "OpenAI Inc", "OpenAI LLC", "OpenAI OpCo LLC"],
+    "normalized_aliases": ["openai", "openai inc", "openai llc", "openai opco llc"],
+    "official_domains": ["openai.com"],
+    "verification_url": "https://openai.com/about/"
+  },
+  {
+    "canonical_id": "anthropic",
+    "canonical_name": "Anthropic",
+    "verified_aliases": ["Anthropic", "Anthropic, PBC", "Anthropic PBC", "Anthropic Inc", "Anthropic AI"],
+    "normalized_aliases": ["anthropic", "anthropic pbc", "anthropic inc", "anthropic ai"],
+    "official_domains": ["anthropic.com"],
+    "verification_url": "https://www.anthropic.com/company"
+  },
+  {
+    "canonical_id": "cohere",
+    "canonical_name": "Cohere",
+    "verified_aliases": ["Cohere", "Cohere Inc.", "Cohere Inc", "Cohere AI"],
+    "normalized_aliases": ["cohere", "cohere inc", "cohere ai"],
+    "official_domains": ["cohere.com"],
+    "verification_url": "https://cohere.com/about"
+  },
+  {
+    "canonical_id": "mistral_ai",
+    "canonical_name": "Mistral AI",
+    "verified_aliases": ["Mistral AI", "Mistral AI SAS", "Mistral", "MistralAI"],
+    "normalized_aliases": ["mistral ai", "mistral ai sas", "mistral", "mistralai"],
+    "official_domains": ["mistral.ai"],
+    "verification_url": "https://mistral.ai/"
+  },
+  {
+    "canonical_id": "hugging_face",
+    "canonical_name": "Hugging Face",
+    "verified_aliases": ["Hugging Face", "Hugging Face, Inc.", "HuggingFace", "Hugging Face Inc", "Hugging Face SAS"],
+    "normalized_aliases": ["hugging face", "hugging face inc", "huggingface", "hugging face sas"],
+    "official_domains": ["huggingface.co"],
+    "verification_url": "https://huggingface.co/about"
+  },
+  {
+    "canonical_id": "scale_ai",
+    "canonical_name": "Scale AI",
+    "verified_aliases": ["Scale AI", "Scale", "Scale AI, Inc.", "Scale Operations Inc.", "Scale Operations"],
+    "normalized_aliases": ["scale ai", "scale", "scale ai inc", "scale operations inc", "scale operations"],
+    "official_domains": ["scale.com"],
+    "verification_url": "https://scale.com/about"
+  },
+  {
+    "canonical_id": "databricks",
+    "canonical_name": "Databricks",
+    "verified_aliases": ["Databricks", "Databricks, Inc.", "Databricks Inc"],
+    "normalized_aliases": ["databricks", "databricks inc"],
+    "official_domains": ["databricks.com"],
+    "verification_url": "https://www.databricks.com/company/about-us"
+  },
+  {
+    "canonical_id": "perplexity_ai",
+    "canonical_name": "Perplexity AI",
+    "verified_aliases": ["Perplexity AI", "Perplexity", "Perplexity AI, Inc.", "Perplexity Inc"],
+    "normalized_aliases": ["perplexity ai", "perplexity", "perplexity ai inc", "perplexity inc"],
+    "official_domains": ["perplexity.ai"],
+    "verification_url": "https://www.perplexity.ai/about"
+  },
+  {
+    "canonical_id": "runway",
+    "canonical_name": "Runway",
+    "verified_aliases": ["Runway", "Runway AI", "Runway AI, Inc.", "RunwayML", "Runway AI Inc"],
+    "normalized_aliases": ["runway", "runway ai", "runway ai inc", "runwayml"],
+    "official_domains": ["runwayml.com"],
+    "verification_url": "https://runwayml.com/about"
+  },
+  {
+    "canonical_id": "stability_ai",
+    "canonical_name": "Stability AI",
+    "verified_aliases": ["Stability AI", "Stability AI Ltd", "Stability AI Limited", "Stability.ai", "Stability AI Inc"],
+    "normalized_aliases": ["stability ai", "stability ai ltd", "stability ai limited", "stability ai inc"],
+    "official_domains": ["stability.ai"],
+    "verification_url": "https://stability.ai/about"
+  },
+  {
+    "canonical_id": "inflection_ai",
+    "canonical_name": "Inflection AI",
+    "verified_aliases": ["Inflection AI", "Inflection AI, Inc.", "Inflection", "Inflection.ai", "Inflection AI Inc"],
+    "normalized_aliases": ["inflection ai", "inflection ai inc", "inflection"],
+    "official_domains": ["inflection.ai"],
+    "verification_url": "https://inflection.ai/"
+  },
+  {
+    "canonical_id": "elevenlabs",
+    "canonical_name": "ElevenLabs",
+    "verified_aliases": ["ElevenLabs", "ElevenLabs Inc.", "Eleven Labs", "ElevenLabs Inc", "Eleven Research Ltd"],
+    "normalized_aliases": ["elevenlabs", "elevenlabs inc", "eleven labs", "eleven research ltd"],
+    "official_domains": ["elevenlabs.io"],
+    "verification_url": "https://elevenlabs.io/about"
+  },
+  {
+    "canonical_id": "midjourney",
+    "canonical_name": "Midjourney",
+    "verified_aliases": ["Midjourney", "Midjourney, Inc.", "Midjourney Inc"],
+    "normalized_aliases": ["midjourney", "midjourney inc"],
+    "official_domains": ["midjourney.com"],
+    "verification_url": "https://www.midjourney.com/"
+  },
+  {
+    "canonical_id": "jasper_ai",
+    "canonical_name": "Jasper",
+    "verified_aliases": ["Jasper", "Jasper AI", "Jasper AI, Inc.", "UseProof Inc", "Jasper AI Inc"],
+    "normalized_aliases": ["jasper", "jasper ai", "jasper ai inc", "useproof inc"],
+    "official_domains": ["jasper.ai"],
+    "verification_url": "https://www.jasper.ai/about"
+  },
+  {
+    "canonical_id": "harvey_ai",
+    "canonical_name": "Harvey",
+    "verified_aliases": ["Harvey", "Harvey AI", "Harvey Technologies, Inc.", "Counsel AI Corp", "Harvey AI Inc"],
+    "normalized_aliases": ["harvey", "harvey ai", "harvey technologies inc", "counsel ai corp"],
+    "official_domains": ["harvey.ai"],
+    "verification_url": "https://www.harvey.ai/about"
+  },
+  {
+    "canonical_id": "pinecone",
+    "canonical_name": "Pinecone",
+    "verified_aliases": ["Pinecone", "Pinecone Systems, Inc.", "Pinecone Systems", "Pinecone Inc"],
+    "normalized_aliases": ["pinecone", "pinecone systems inc", "pinecone systems", "pinecone inc"],
+    "official_domains": ["pinecone.io"],
+    "verification_url": "https://www.pinecone.io/about/"
+  },
+  {
+    "canonical_id": "weaviate",
+    "canonical_name": "Weaviate",
+    "verified_aliases": ["Weaviate", "Weaviate B.V.", "SeMI Technologies B.V.", "Weaviate Inc"],
+    "normalized_aliases": ["weaviate", "weaviate bv", "semi technologies bv", "weaviate inc"],
+    "official_domains": ["weaviate.io"],
+    "verification_url": "https://weaviate.io/company/about-us"
+  },
+  {
+    "canonical_id": "qdrant",
+    "canonical_name": "Qdrant",
+    "verified_aliases": ["Qdrant", "Qdrant Solutions GmbH", "Qdrant Solutions"],
+    "normalized_aliases": ["qdrant", "qdrant solutions gmbh", "qdrant solutions"],
+    "official_domains": ["qdrant.tech"],
+    "verification_url": "https://qdrant.tech/about/"
+  },
+  {
+    "canonical_id": "character_ai",
+    "canonical_name": "Character.AI",
+    "verified_aliases": ["Character.AI", "Character AI", "Character Technologies, Inc.", "Character Technologies", "c.ai"],
+    "normalized_aliases": ["character ai", "character technologies inc", "character technologies", "c ai"],
+    "official_domains": ["character.ai"],
+    "verification_url": "https://character.ai/"
+  },
+  {
+    "canonical_id": "synthesia",
+    "canonical_name": "Synthesia",
+    "verified_aliases": ["Synthesia", "Synthesia Limited", "Synthesia Ltd"],
+    "normalized_aliases": ["synthesia", "synthesia limited", "synthesia ltd"],
+    "official_domains": ["synthesia.io"],
+    "verification_url": "https://www.synthesia.io/about"
+  },
+  {
+    "canonical_id": "anysphere",
+    "canonical_name": "Anysphere",
+    "verified_aliases": ["Anysphere", "Anysphere, Inc.", "Cursor", "Cursor AI", "Anysphere Inc"],
+    "normalized_aliases": ["anysphere", "anysphere inc", "cursor", "cursor ai"],
+    "official_domains": ["cursor.com", "anysphere.inc"],
+    "verification_url": "https://www.cursor.com/"
+  },
+  {
+    "canonical_id": "glean",
+    "canonical_name": "Glean",
+    "verified_aliases": ["Glean", "Glean Technologies, Inc.", "Glean Inc"],
+    "normalized_aliases": ["glean", "glean technologies inc", "glean inc"],
+    "official_domains": ["glean.com"],
+    "verification_url": "https://www.glean.com/about"
+  },
+  {
+    "canonical_id": "adept_ai",
+    "canonical_name": "Adept AI",
+    "verified_aliases": ["Adept AI", "Adept AI Labs Inc.", "Adept", "Adept Labs", "Adept AI Labs"],
+    "normalized_aliases": ["adept ai", "adept ai labs inc", "adept", "adept labs", "adept ai labs"],
+    "official_domains": ["adept.ai"],
+    "verification_url": "https://www.adept.ai/"
+  },
+  {
+    "canonical_id": "covariant",
+    "canonical_name": "Covariant",
+    "verified_aliases": ["Covariant", "Covariant.ai", "Embodied Intelligence Inc.", "Embodied Intelligence"],
+    "normalized_aliases": ["covariant", "embodied intelligence inc", "embodied intelligence"],
+    "official_domains": ["covariant.ai"],
+    "verification_url": "https://covariant.ai/about/"
+  },
+  {
+    "canonical_id": "figure_ai",
+    "canonical_name": "Figure AI",
+    "verified_aliases": ["Figure AI", "Figure AI, Inc.", "Figure", "Figure 01"],
+    "normalized_aliases": ["figure ai", "figure ai inc", "figure", "figure 01"],
+    "official_domains": ["figure.ai"],
+    "verification_url": "https://www.figure.ai/company"
+  },
+  {
+    "canonical_id": "physical_intelligence",
+    "canonical_name": "Physical Intelligence",
+    "verified_aliases": ["Physical Intelligence", "Physical Intelligence, Inc.", "π0", "pi-zero"],
+    "normalized_aliases": ["physical intelligence", "physical intelligence inc", "pi zero"],
+    "official_domains": ["physicalintelligence.company"],
+    "verification_url": "https://www.physicalintelligence.company/"
+  },
+  {
+    "canonical_id": "shield_ai",
+    "canonical_name": "Shield AI",
+    "verified_aliases": ["Shield AI", "Shield AI, Inc.", "Shield AI Inc"],
+    "normalized_aliases": ["shield ai", "shield ai inc"],
+    "official_domains": ["shield.ai"],
+    "verification_url": "https://shield.ai/company/"
+  },
+  {
+    "canonical_id": "helsing",
+    "canonical_name": "Helsing",
+    "verified_aliases": ["Helsing", "Helsing GmbH", "Helsing Ltd", "Helsing AI", "Helsing Technologies"],
+    "normalized_aliases": ["helsing", "helsing gmbh", "helsing ltd", "helsing ai", "helsing technologies"],
+    "official_domains": ["helsing.ai"],
+    "verification_url": "https://helsing.ai/about"
+  },
+  {
+    "canonical_id": "deepl",
+    "canonical_name": "DeepL",
+    "verified_aliases": ["DeepL", "DeepL SE", "DeepL GmbH", "Linguee GmbH"],
+    "normalized_aliases": ["deepl", "deepl se", "deepl gmbh", "linguee gmbh"],
+    "official_domains": ["deepl.com"],
+    "verification_url": "https://www.deepl.com/about"
+  },
+  {
+    "canonical_id": "writer_ai",
+    "canonical_name": "Writer",
+    "verified_aliases": ["Writer", "Writer, Inc.", "Writer AI", "Qordoba Inc"],
+    "normalized_aliases": ["writer", "writer inc", "writer ai", "qordoba inc"],
+    "official_domains": ["writer.com"],
+    "verification_url": "https://writer.com/about/"
+  },
+  {
+    "canonical_id": "together_ai",
+    "canonical_name": "Together AI",
+    "verified_aliases": ["Together AI", "Together Computer, Inc.", "Together Computer", "Together"],
+    "normalized_aliases": ["together ai", "together computer inc", "together computer", "together"],
+    "official_domains": ["together.ai"],
+    "verification_url": "https://www.together.ai/about"
+  },
+  {
+    "canonical_id": "replicate",
+    "canonical_name": "Replicate",
+    "verified_aliases": ["Replicate", "Replicate, Inc.", "Replicate Inc"],
+    "normalized_aliases": ["replicate", "replicate inc"],
+    "official_domains": ["replicate.com"],
+    "verification_url": "https://replicate.com/about"
+  },
+  {
+    "canonical_id": "fireworks_ai",
+    "canonical_name": "Fireworks AI",
+    "verified_aliases": ["Fireworks AI", "Fireworks AI, Inc.", "Fireworks.ai", "Fireworks"],
+    "normalized_aliases": ["fireworks ai", "fireworks ai inc", "fireworks"],
+    "official_domains": ["fireworks.ai"],
+    "verification_url": "https://fireworks.ai/company"
+  },
+  {
+    "canonical_id": "groq",
+    "canonical_name": "Groq",
+    "verified_aliases": ["Groq", "Groq, Inc.", "Groq Inc"],
+    "normalized_aliases": ["groq", "groq inc"],
+    "official_domains": ["groq.com"],
+    "verification_url": "https://groq.com/about-us/"
+  },
+  {
+    "canonical_id": "cerebras",
+    "canonical_name": "Cerebras Systems",
+    "verified_aliases": ["Cerebras Systems", "Cerebras", "Cerebras Systems, Inc.", "Cerebras Inc"],
+    "normalized_aliases": ["cerebras systems", "cerebras", "cerebras systems inc", "cerebras inc"],
+    "official_domains": ["cerebras.ai"],
+    "verification_url": "https://cerebras.ai/company/"
+  },
+  {
+    "canonical_id": "sambanova",
+    "canonical_name": "SambaNova Systems",
+    "verified_aliases": ["SambaNova Systems", "SambaNova", "SambaNova Systems, Inc."],
+    "normalized_aliases": ["sambanova systems", "sambanova", "sambanova systems inc"],
+    "official_domains": ["sambanova.ai"],
+    "verification_url": "https://sambanova.ai/company/about-us/"
+  },
+  {
+    "canonical_id": "tenstorrent",
+    "canonical_name": "Tenstorrent",
+    "verified_aliases": ["Tenstorrent", "Tenstorrent Inc.", "Tenstorrent Inc"],
+    "normalized_aliases": ["tenstorrent", "tenstorrent inc"],
+    "official_domains": ["tenstorrent.com"],
+    "verification_url": "https://tenstorrent.com/company/"
+  },
+  {
+    "canonical_id": "lambda_labs",
+    "canonical_name": "Lambda",
+    "verified_aliases": ["Lambda", "Lambda Labs", "Lambda, Inc.", "Lambda Labs, Inc."],
+    "normalized_aliases": ["lambda", "lambda labs", "lambda inc", "lambda labs inc"],
+    "official_domains": ["lambdalabs.com"],
+    "verification_url": "https://lambdalabs.com/about"
+  },
+  {
+    "canonical_id": "modal_labs",
+    "canonical_name": "Modal",
+    "verified_aliases": ["Modal", "Modal Labs", "Modal Labs, Inc.", "Modal Inc"],
+    "normalized_aliases": ["modal", "modal labs", "modal labs inc", "modal inc"],
+    "official_domains": ["modal.com"],
+    "verification_url": "https://modal.com/about"
+  },
+  {
+    "canonical_id": "coreweave",
+    "canonical_name": "CoreWeave",
+    "verified_aliases": ["CoreWeave", "CoreWeave, Inc.", "CoreWeave Inc"],
+    "normalized_aliases": ["coreweave", "coreweave inc"],
+    "official_domains": ["coreweave.com"],
+    "verification_url": "https://www.coreweave.com/about"
+  },
+  {
+    "canonical_id": "poolside_ai",
+    "canonical_name": "Poolside",
+    "verified_aliases": ["Poolside", "Poolside AI", "Poolside, Inc.", "Poolside Inc"],
+    "normalized_aliases": ["poolside", "poolside ai", "poolside inc"],
+    "official_domains": ["poolside.ai"],
+    "verification_url": "https://poolside.ai/"
+  },
+  {
+    "canonical_id": "sakana_ai",
+    "canonical_name": "Sakana AI",
+    "verified_aliases": ["Sakana AI", "Sakana AI K.K.", "Sakana"],
+    "normalized_aliases": ["sakana ai", "sakana ai kk", "sakana"],
+    "official_domains": ["sakana.ai"],
+    "verification_url": "https://sakana.ai/about/"
+  },
+  {
+    "canonical_id": "cognition_ai",
+    "canonical_name": "Cognition AI",
+    "verified_aliases": ["Cognition AI", "Cognition", "Cognition AI, Inc.", "Devin AI"],
+    "normalized_aliases": ["cognition ai", "cognition", "cognition ai inc", "devin ai"],
+    "official_domains": ["cognition.ai"],
+    "verification_url": "https://www.cognition.ai/"
+  },
+  {
+    "canonical_id": "decagon",
+    "canonical_name": "Decagon",
+    "verified_aliases": ["Decagon", "Decagon, Inc.", "Decagon AI"],
+    "normalized_aliases": ["decagon", "decagon inc", "decagon ai"],
+    "official_domains": ["decagon.ai"],
+    "verification_url": "https://decagon.ai/about"
+  },
+  {
+    "canonical_id": "sierra_ai",
+    "canonical_name": "Sierra",
+    "verified_aliases": ["Sierra", "Sierra AI", "Sierra Technologies, Inc."],
+    "normalized_aliases": ["sierra", "sierra ai", "sierra technologies inc"],
+    "official_domains": ["sierra.ai"],
+    "verification_url": "https://sierra.ai/about"
+  },
+  {
+    "canonical_id": "factory_ai",
+    "canonical_name": "Factory",
+    "verified_aliases": ["Factory", "Factory AI", "Factory Robotics, Inc.", "FactoryHQ"],
+    "normalized_aliases": ["factory", "factory ai", "factory robotics inc", "factoryhq"],
+    "official_domains": ["factory.ai"],
+    "verification_url": "https://factory.ai/about"
+  },
+  {
+    "canonical_id": "hebbia_ai",
+    "canonical_name": "Hebbia",
+    "verified_aliases": ["Hebbia", "Hebbia AI", "Hebbia, Inc.", "Hebbia Inc"],
+    "normalized_aliases": ["hebbia", "hebbia ai", "hebbia inc"],
+    "official_domains": ["hebbia.ai"],
+    "verification_url": "https://www.hebbia.ai/about"
+  },
+  {
+    "canonical_id": "essential_ai",
+    "canonical_name": "Essential AI",
+    "verified_aliases": ["Essential AI", "Essential AI, Inc.", "Essential AI Inc"],
+    "normalized_aliases": ["essential ai", "essential ai inc"],
+    "official_domains": ["essential.ai"],
+    "verification_url": "https://essential.ai/"
+  },
+  {
+    "canonical_id": "langchain",
+    "canonical_name": "LangChain",
+    "verified_aliases": ["LangChain", "LangChain, Inc.", "LangChain Inc", "LangChain AI"],
+    "normalized_aliases": ["langchain", "langchain inc", "langchain ai"],
+    "official_domains": ["langchain.com"],
+    "verification_url": "https://www.langchain.com/about"
+  },
+  {
+    "canonical_id": "llamaindex",
+    "canonical_name": "LlamaIndex",
+    "verified_aliases": ["LlamaIndex", "Llama Index", "LlamaIndex, Inc.", "Run Llama"],
+    "normalized_aliases": ["llamaindex", "llama index", "llamaindex inc", "run llama"],
+    "official_domains": ["llamaindex.ai"],
+    "verification_url": "https://www.llamaindex.ai/about"
+  },
+  {
+    "canonical_id": "weights_and_biases",
+    "canonical_name": "Weights & Biases",
+    "verified_aliases": ["Weights & Biases", "W&B", "Weights and Biases", "Weights & Biases, Inc."],
+    "normalized_aliases": ["weights and biases", "wb", "weights and biases inc"],
+    "official_domains": ["wandb.ai"],
+    "verification_url": "https://wandb.ai/site/about"
+  },
+  {
+    "canonical_id": "cohere_health",
+    "canonical_name": "Cohere Health",
+    "verified_aliases": ["Cohere Health", "Cohere Health, Inc."],
+    "normalized_aliases": ["cohere health", "cohere health inc"],
+    "official_domains": ["coherehealth.com"],
+    "verification_url": "https://coherehealth.com/"
+  }
+]

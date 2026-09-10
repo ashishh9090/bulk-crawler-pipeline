@@ -1,0 +1,119 @@
+{
+  "_comment": "SYNTHETIC TEST FIXTURES ONLY - NOT REAL PRODUCTION CRAWL RESULTS",
+  "synthetic_test_data": true,
+  "schema_version": "1.0",
+  "sample_records": {
+    "STARTUP": {
+      "schemaVersion": "1.0",
+      "recordType": "STARTUP",
+      "source": {
+        "name": "SyntheticTestRegistry",
+        "url": "https://synthetic.test.example/entity/sample-ai"
+      },
+      "content": {
+        "entityName": "Sample AI, Inc.",
+        "data": {
+          "employeeCount": 42
+        }
+      },
+      "collectedAt": "2026-09-11T00:00:00Z",
+      "_provenance": {
+        "entityName": {
+          "sourceUrl": "https://synthetic.test.example/entity/sample-ai",
+          "sourceFieldOrSelector": "h1.company-title",
+          "extractionTimestamp": "2026-09-11T00:00:00Z",
+          "confidence": 1.0,
+          "isDirectSourceData": true
+        },
+        "employeeCount": {
+          "sourceUrl": "https://synthetic.test.example/entity/sample-ai",
+          "sourceFieldOrSelector": "span.employees-count",
+          "extractionTimestamp": "2026-09-11T00:00:00Z",
+          "confidence": 0.95,
+          "isDirectSourceData": true
+        }
+      }
+    },
+    "PRODUCT": {
+      "schemaVersion": "1.0",
+      "recordType": "PRODUCT",
+      "source": {
+        "name": "SyntheticSoftwareCatalog",
+        "url": "https://synthetic.test.example/product/sample-llm"
+      },
+      "content": {
+        "startupName": "Sample AI",
+        "pricingModel": "FREEMIUM"
+      },
+      "collectedAt": "2026-09-11T00:00:00Z",
+      "_provenance": {
+        "pricingModel": {
+          "sourceUrl": "https://synthetic.test.example/product/sample-llm",
+          "sourceFieldOrSelector": "div.pricing-badge",
+          "extractionTimestamp": "2026-09-11T00:00:00Z",
+          "confidence": 1.0,
+          "isDirectSourceData": true
+        }
+      }
+    },
+    "RESEARCH_PAPER": {
+      "schemaVersion": "1.0",
+      "recordType": "RESEARCH_PAPER",
+      "content": {
+        "title": "Synthetic Gradient Scaling in Transformer Models",
+        "authors": [
+          "Jane Doe",
+          "John Smith"
+        ],
+        "paper_url": "https://synthetic.arxiv.test/abs/2609.99999",
+        "github_url": "https://github.com/synthetic-lab/gradient-scaling",
+        "github_stars": 128,
+        "published_date": "2026-09-10T12:00:00Z"
+      },
+      "_provenance": {
+        "github_stars": {
+          "sourceUrl": "https://api.github.com/repos/synthetic-lab/gradient-scaling",
+          "sourceFieldOrSelector": "stargazers_count",
+          "extractionTimestamp": "2026-09-11T00:00:00Z",
+          "confidence": 1.0,
+          "isDirectSourceData": true
+        }
+      }
+    },
+    "JOB": {
+      "schemaVersion": "1.0",
+      "recordType": "JOB",
+      "content": {
+        "company": "Sample AI",
+        "date": "2026-09-10T18:00:00Z",
+        "is_remote": true,
+        "role_family": "Engineering"
+      },
+      "_provenance": {
+        "is_remote": {
+          "sourceUrl": "https://synthetic.jobs.test/posting/123",
+          "sourceFieldOrSelector": "span.tag-remote",
+          "extractionTimestamp": "2026-09-11T00:00:00Z",
+          "confidence": 1.0,
+          "isDirectSourceData": true
+        }
+      }
+    },
+    "ENTITY_RESOLUTION_LOG": {
+      "source_record_id": "SYNTHETIC:001",
+      "raw_entity_name": "Sample AI, Inc.",
+      "normalized_entity_name": "sample ai",
+      "canonical_entity_id": "sample_ai",
+      "canonical_entity_name": "Sample AI",
+      "match_strategy": "EXACT_NORMALIZED_ALIAS",
+      "confidence": 0.98,
+      "aliases_used": [
+        "sample ai inc"
+      ],
+      "domains_used": [],
+      "resolver_version": "1.0.0",
+      "timestamp": "2026-09-11T00:00:00Z",
+      "unresolved_reason": null
+    }
+  }
+}

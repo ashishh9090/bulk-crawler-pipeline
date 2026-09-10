@@ -52,10 +52,11 @@ class ContentCleaner:
 
         # Remove elements with noisy classes or IDs
         for el in soup.find_all(True):
-            if not isinstance(el, Tag):
+            if not isinstance(el, Tag) or not getattr(el, "attrs", None):
                 continue
-            el_id = el.get("id", "")
-            el_classes = " ".join(el.get("class", []))
+            el_id = str(el.attrs.get("id") or "")
+            raw_classes = el.attrs.get("class", [])
+            el_classes = " ".join(raw_classes) if isinstance(raw_classes, list) else str(raw_classes or "")
             if NOISY_CLASS_OR_ID_PATTERNS.search(el_id) or NOISY_CLASS_OR_ID_PATTERNS.search(el_classes):
                 # Don't delete body or main
                 if el.name not in ("body", "main", "html"):
