@@ -1,0 +1,36 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Pytest & testing cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Packaging & Distribution
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Secrets & Environment variables
+.env
+!.env.example
+
+# Temporary database journal / WAL files
+*.db-journal
+*.db-wal
+*.db-shm
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
