@@ -1,0 +1,35 @@
+{
+  "name": "@crawler/extraction-engine",
+  "version": "1.0.0",
+  "description": "Production-grade Multi-Tier LLM Extraction Engine with multi-provider fallback and canonical schema enforcement",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "demo": "node dist/demo.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "llm",
+    "data-extraction",
+    "gemini",
+    "groq",
+    "deepseek",
+    "fallback",
+    "json-schema",
+    "crawler"
+  ],
+  "author": "Bulk Crawler Pipeline Team",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}

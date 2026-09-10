@@ -231,3 +231,28 @@ python -m crawler.pipeline --type product --limit 1000 --export all
 - `--workers`: Number of concurrent async workers (default: `50`)
 - `--export`: Export formats (`json`, `csv`, `jsonl`, `all`)
 - `--log-format`: `json` for production monitoring, `console` for human-readable output
+
+---
+
+## Phase III: Multi-Tier LLM Extraction Engine (`extraction_engine/`)
+
+Production-grade, highly resilient extraction engine in TypeScript designed to reliably extract structured entities from unstructured, noisy, or malformed web pages and raw text into strict canonical JSON schemas (`STARTUP`, `PRODUCT`, `RESEARCH_PAPER`).
+
+### Architecture Highlights:
+- **Multi-Provider Fallback Chain**: Default order `Gemini Flash` → `Groq Llama 3` → `DeepSeek`. Fails over on timeout, 429 rate limit exhaustion, 5xx server errors, or validation rejection.
+- **Strict Canonical Schema Enforcement**: Powered by Ajv. Output is strictly validated before being returned.
+- **Bounded JSON Repair**: Syntactic healing plus 1 bounded repair prompt with the same provider before failover.
+- **Semantic Boundary Chunking**: Splits large documents along headings, paragraphs, lists, and sentences.
+- **Payload Safety & 413 Recovery**: Halves chunk size dynamically and retries upon 413 Payload Too Large.
+- **Exponential Backoff with Full Jitter**: Respects `Retry-After` header with randomized jitter and abort cancellation.
+- **Hierarchical Extraction & Consolidation**: Consolidates and deduplicates partial candidates across multi-chunk documents.
+- **Sensitive Data Protection**: Redacting structured logger ensuring API keys and secrets are never logged.
+
+### Quick Start:
+```bash
+cd extraction_engine
+npm install
+npm test
+npm run build
+```
+
