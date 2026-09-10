@@ -234,6 +234,138 @@ python -m crawler.pipeline --type product --limit 1000 --export all
 
 ---
 
+## Phase II: High-Fidelity Signal Ingestion (`crawler/signals/`)
+
+Production-ready signal ingestion pipeline that monitors exactly 5 configurable AI-news sources and 5 configurable AI-job boards. Discovers, fetches, normalizes, deduplicates, and persists only items verified—or conservatively inferred—to be fresh within the previous 24 hours.
+
+```
+Config-Driven Sources (`sources.json`)
+                ↓
+Discovery Adapters (RSS / Atom / JSON API / HTML Listing)
+                ↓
+URL Canonicalizer & Politeness Check (Robots.txt + Domain Concurrency)
+                ↓
+Detail Page Extraction & Noisy Chrome Cleaner (Headings, Markdown, Metadata)
+                ↓
+Multi-Tier Publication Date Parser (Structured → Visible → Relative → URL)
+                ↓
+Strict 24-Hour Freshness Gate & Stateful Heuristic
+  ├─ [accepted_verified] (Published within 24h of run reference UTC)
+  ├─ [accepted_inferred] (Undated, new since last run baseline, top ranking)
+  ├─ [rejected_stale]    (Published > 24h ago or future > 15m clock skew)
+  └─ [rejected_unknown]  (Missing date without reliable freshness signals)
+                ↓
+Two-Tier Deduplication & Idempotent Persistence (SQLite WAL / PostgreSQL)
+                ↓
+Stateful Watermark Advancement & Observability Logs
+```
+
+### 1. 10 Configured Sources
+
+All source metadata is isolated in `crawler/signals/sources.json` (no hard-coded crawler logic):
+
+#### 5 AI News Sources:
+1. **TechCrunch AI** (`techcrunch_ai`): Official RSS feed (`/category/artificial-intelligence/feed/`) with full-text article extraction and bylines.
+2. **VentureBeat AI** (`venturebeat_ai`): RSS feed (`/category/ai/feed/`) with full-article extraction.
+3. **The Verge AI** (`the_verge_ai`): Atom feed (`/rss/ai-artificial-intelligence/index.xml`) with article body extraction and byline metadata.
+4. **MIT Technology Review AI** (`mit_tech_review_ai`): RSS/Atom feed (`/topic/artificial-intelligence/feed/`) with clean journalism extraction.
+5. **Hugging Face Blog** (`huggingface_blog`): Official Atom feed (`/blog/feed.xml`) with community & research posts.
+
+#### 5 AI Job Boards:
+6. **AI-Jobs.net** (`ai_jobs_net`): Dedicated AI/ML RSS feed (`/?format=rss`) with compensation, location, and role descriptions.
+7. **RemoteOK AI** (`remoteok_ai`): Official JSON API (`/api?tag=ai`) with structured titles, salaries, locations, and tags.
+8. **We Work Remotely AI/ML** (`weworkremotely_ai`): Targeted RSS feed with AI keyword filtering.
+9. **Hugging Face Jobs** (`huggingface_jobs`): HTML listing scraper (`/jobs`) with CSS selectors and full detail page crawling.
+10. **Work at a Startup AI (YC)** (`yc_workatastartup_ai`): HTML listing scraper for YC AI portfolio companies with compensation and role details.
+
+### 2. Configuration & Environment Variables
+
+Tune the ingestion pipeline via `.env` or system environment variables:
+
+| Variable | Default | Description |
+|---|---|---|
+| `FRESHNESS_WINDOW_HOURS` | `24` | Maximum age in hours for publication freshness |
+| `CLOCK_SKEW_TOLERANCE_MINUTES` | `15` | Clock-skew tolerance before rejecting future dates |
+| `SIGNAL_USER_AGENT` | `Mozilla/5.0 ... AI-Intelligence-Signal-Bot/2.0` | Polite User-Agent identifying the crawler |
+| `SIGNAL_REQUEST_TIMEOUT` | `20.0` | HTTP request timeout in seconds |
+| `SIGNAL_MAX_RETRIES` | `3` | Max retries with exponential backoff & jitter |
+| `SIGNAL_BACKOFF_FACTOR` | `1.5` | Exponential backoff multiplication factor |
+| `HONOR_ROBOTS_TXT` | `true` | Asynchronously checks and respects `robots.txt` per domain |
+| `SOURCES_CONFIG_PATH` | `None` (uses `sources.json`) | Path override for external sources configuration file |
+
+### 3. Date Normalization Precedence
+
+Dates are extracted using a strict 4-tier prioritized strategy:
+1. **Structured Metadata** (Confidence: `0.88 - 0.98`):
+   - JSON-LD Schema: `datePublished` (and optional `dateModified` if configured)
+   - Open Graph: `article:published_time`, `og:published_time`
+   - Standard HTML Meta Tags: `pubdate`, `timestamp`, `dc.date`, `parsely-pub-date`
+   - RSS/Atom Header: `<pubDate>`, `<published>`, `<updated>`, `<dc:date>`
+2. **Visible Page Content** (Confidence: `0.80 - 0.85`):
+   - `<time datetime="...">` tags and inner text
+   - Configured source-specific CSS selectors (`time.wp-block-post-date`, `.byline time`, etc.)
+3. **Relative Dates** (Confidence: `0.75 - 0.80`):
+   - Phrases: *"2 hours ago"*, *"15 minutes ago"*, *"yesterday"*, *"today"*, *"posted 1 day ago"*
+   - Resolved against the run's UTC reference timestamp in the source's configured `timezone`, then normalized to ISO 8601 UTC.
+4. **URL and Context Fallbacks** (Confidence: `0.50 - 0.70`):
+   - Configured URL date pattern regex (e.g. `/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/`)
+   - Sitemap `lastmod` only when passed as an explicit low-confidence fallback.
+- **Ambiguous Numeric Dates**: Disambiguated by configured source `locale` (`en_US` = MM/DD/YYYY, `en_GB` = DD/MM/YYYY).
+- **Future Dates**: Dates beyond the `CLOCK_SKEW_TOLERANCE_MINUTES` are rejected.
+
+### 4. Freshness Gate & Missing-Date Heuristic
+
+- **Single UTC Reference Timestamp**: Every run uses a single UTC reference timestamp (`reference_time`) for all freshness comparisons.
+- **Explicit Decisions**:
+  - `accepted_verified`: Record has a verified date within `[reference_time - 24h, reference_time + clock_skew]`.
+  - `accepted_inferred`: Record lacks an explicit publication date but passes the stateful heuristic.
+  - `rejected_stale`: Record's publication timestamp is older than 24h or in the future beyond clock skew.
+  - `rejected_unknown`: Record lacks date and fails stateful heuristic verification.
+- **Stateful "New Since Last Run" Heuristic**:
+  - An undated record is accepted **only** if:
+    1. A prior successful crawl state exists for the source.
+    2. The item is absent from the prior snapshot of observed canonical URLs and content hashes.
+    3. The item was first seen after the previous successful crawl.
+    4. The item's listing position indicates top recency (`position <= 25`).
+  - Constraint: **Never infers an exact `publishedAt` timestamp**; `publishedAt` remains `null` while `firstSeenAt` tracks discovery.
+  - Invariant: **Failed or partial crawls NEVER advance the successful-run watermark.**
+
+### 5. Running Locally & Scheduling Ingestion
+
+#### Run All Sources:
+```bash
+python -m crawler.signals.cli --sources all --limit 20
+```
+
+#### Run Specific Sources or Categories:
+```bash
+# Ingest only AI news
+python -m crawler.signals.cli --type news --limit 20
+
+# Ingest only AI job boards
+python -m crawler.signals.cli --type job --limit 20
+
+# Ingest specific sources
+python -m crawler.signals.cli --sources techcrunch_ai,huggingface_blog,remoteok_ai --limit 10
+```
+
+#### Scheduled Execution:
+To run on a recurring hourly schedule, use standard cron:
+```cron
+# Run signal ingestion hourly at minute 0
+0 * * * * cd /path/to/bulk_crawler_pipeline && /path/to/.venv/bin/python -m crawler.signals.cli --sources all --log-format json >> /var/log/signals_cron.log 2>&1
+```
+
+Overlapping runs for the same source are automatically prevented via in-memory execution locks.
+
+### 6. Known Limitations & Compliance Considerations
+
+- **Respectful Crawling**: The pipeline queries and honors `robots.txt` per domain, limits concurrency per source, applies configurable delays (`rate_limit_delay`), and redacts authorization tokens, cookies, and sensitive headers from structured logs.
+- **JavaScript Rendering**: Sources are crawled via HTTP/feed APIs by default. For single-page applications requiring heavy client-side hydration, Playwright can be enabled via `ENABLE_PLAYWRIGHT=true`.
+- **Heuristic Integrity**: Inferred freshness is clearly marked with `accepted_inferred` and lower confidence (`0.65`) to prevent false claims of verified timeliness in downstream intelligence analytics.
+
+---
+
 ## Phase III: Multi-Tier LLM Extraction Engine (`extraction_engine/`)
 
 Production-grade, highly resilient extraction engine in TypeScript designed to reliably extract structured entities from unstructured, noisy, or malformed web pages and raw text into strict canonical JSON schemas (`STARTUP`, `PRODUCT`, `RESEARCH_PAPER`).

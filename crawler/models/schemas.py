@@ -10,6 +10,8 @@ class RecordType(str, Enum):
     STARTUP = "STARTUP"
     PRODUCT = "PRODUCT"
     RESEARCH_PAPER = "RESEARCH_PAPER"
+    NEWS = "NEWS"
+    JOB = "JOB"
 
 
 PricingModel = Literal["FREE", "FREEMIUM", "PAID", "ENTERPRISE"]
@@ -149,3 +151,7 @@ class ResearchPaperRecord(BaseModel):
 
 
 AnyCrawlRecord = Union[StartupRecord, ProductRecord, ResearchPaperRecord]
+
+# Phase II Signal Records
+from crawler.signals.models import NewsRecord, JobRecord  # noqa: E402
+AnySignalRecord = Union[NewsRecord, JobRecord]

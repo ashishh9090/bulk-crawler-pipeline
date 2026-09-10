@@ -29,3 +29,9 @@ dev = [
 
 [project.scripts]
 crawler = "crawler.pipeline:main"
+signal-crawler = "crawler.signals.cli:main"
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::bs4.XMLParsedAsHTMLWarning",
+]

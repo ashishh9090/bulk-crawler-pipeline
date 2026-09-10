@@ -1,0 +1,280 @@
+[
+  {
+    "id": "techcrunch_ai",
+    "name": "TechCrunch AI",
+    "type": "news",
+    "base_url": "https://techcrunch.com",
+    "listing_urls": [
+      "https://techcrunch.com/category/artificial-intelligence/feed/"
+    ],
+    "crawl_interval_minutes": 60,
+    "timezone": "America/New_York",
+    "locale": "en_US",
+    "adapter_type": "rss",
+    "selectors": {
+      "article": "article",
+      "title": "h1.article__title, h1.entry-title, h1",
+      "body": ".article-content, .entry-content, .wp-block-post-content",
+      "author": ".byline, .article__byline, [rel='author']",
+      "date": "time.wp-block-post-date, time"
+    },
+    "date_rules": {
+      "url_date_pattern": null,
+      "preferred_meta": ["article:published_time", "pubdate"]
+    },
+    "rate_limit_delay": 0.5,
+    "concurrency": 2
+  },
+  {
+    "id": "venturebeat_ai",
+    "name": "VentureBeat AI",
+    "type": "news",
+    "base_url": "https://venturebeat.com",
+    "listing_urls": [
+      "https://venturebeat.com/category/ai/feed/"
+    ],
+    "crawl_interval_minutes": 60,
+    "timezone": "America/Los_Angeles",
+    "locale": "en_US",
+    "adapter_type": "rss",
+    "selectors": {
+      "article": "article",
+      "title": "h1.article-title, h1",
+      "body": ".article-body, .entry-content",
+      "author": ".author, a.author-name",
+      "date": "time.datetime, time"
+    },
+    "date_rules": {
+      "url_date_pattern": null,
+      "preferred_meta": ["article:published_time"]
+    },
+    "rate_limit_delay": 0.5,
+    "concurrency": 2
+  },
+  {
+    "id": "the_verge_ai",
+    "name": "The Verge AI",
+    "type": "news",
+    "base_url": "https://www.theverge.com",
+    "listing_urls": [
+      "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"
+    ],
+    "crawl_interval_minutes": 60,
+    "timezone": "America/New_York",
+    "locale": "en_US",
+    "adapter_type": "rss",
+    "selectors": {
+      "article": "article, main",
+      "title": "h1",
+      "body": ".duet--article--article-body-component, .c-entry-content",
+      "author": "[rel='author'], .duet--article--byline",
+      "date": "time"
+    },
+    "date_rules": {
+      "url_date_pattern": "/(?P<year>\\d{4})/(?P<month>\\d{1,2})/(?P<day>\\d{1,2})/",
+      "preferred_meta": ["article:published_time"]
+    },
+    "rate_limit_delay": 0.5,
+    "concurrency": 2
+  },
+  {
+    "id": "mit_tech_review_ai",
+    "name": "MIT Technology Review AI",
+    "type": "news",
+    "base_url": "https://www.technologyreview.com",
+    "listing_urls": [
+      "https://www.technologyreview.com/topic/artificial-intelligence/feed/"
+    ],
+    "crawl_interval_minutes": 120,
+    "timezone": "America/New_York",
+    "locale": "en_US",
+    "adapter_type": "rss",
+    "selectors": {
+      "article": "article",
+      "title": "h1",
+      "body": ".contentBlock, .article-body, #content",
+      "author": ".byline, a[href*='/author/']",
+      "date": "time"
+    },
+    "date_rules": {
+      "url_date_pattern": "/(?P<year>\\d{4})/(?P<month>\\d{2})/(?P<day>\\d{2})/",
+      "preferred_meta": ["article:published_time"]
+    },
+    "rate_limit_delay": 0.5,
+    "concurrency": 2
+  },
+  {
+    "id": "huggingface_blog",
+    "name": "Hugging Face Blog",
+    "type": "news",
+    "base_url": "https://huggingface.co",
+    "listing_urls": [
+      "https://huggingface.co/blog/feed.xml"
+    ],
+    "crawl_interval_minutes": 120,
+    "timezone": "UTC",
+    "locale": "en_US",
+    "adapter_type": "rss",
+    "selectors": {
+      "article": "main, article",
+      "title": "h1",
+      "body": ".blog-content, .prose, main",
+      "author": ".author, [data-author]",
+      "date": "time"
+    },
+    "date_rules": {
+      "url_date_pattern": null,
+      "preferred_meta": ["article:published_time"]
+    },
+    "rate_limit_delay": 0.5,
+    "concurrency": 2
+  },
+  {
+    "id": "ai_jobs_net",
+    "name": "AI-Jobs.net",
+    "type": "job",
+    "base_url": "https://ai-jobs.net",
+    "listing_urls": [
+      "https://ai-jobs.net/?format=rss"
+    ],
+    "crawl_interval_minutes": 60,
+    "timezone": "UTC",
+    "locale": "en_US",
+    "adapter_type": "rss",
+    "selectors": {
+      "title": "h1",
+      "company": ".company-name, .job-company, h2",
+      "location": ".job-location, .location",
+      "salary": ".job-salary, .salary",
+      "body": "#job-description, .job-description, .content",
+      "date": "time"
+    },
+    "date_rules": {
+      "url_date_pattern": null,
+      "preferred_meta": ["job:posted_date"]
+    },
+    "rate_limit_delay": 0.5,
+    "concurrency": 2
+  },
+  {
+    "id": "remoteok_ai",
+    "name": "RemoteOK AI",
+    "type": "job",
+    "base_url": "https://remoteok.com",
+    "listing_urls": [
+      "https://remoteok.com/api?tag=ai"
+    ],
+    "crawl_interval_minutes": 60,
+    "timezone": "UTC",
+    "locale": "en_US",
+    "adapter_type": "api",
+    "selectors": {
+      "api_item_key": null,
+      "id_field": "id",
+      "title_field": "position",
+      "company_field": "company",
+      "location_field": "location",
+      "salary_field": "salary_min",
+      "description_field": "description",
+      "date_field": "date",
+      "url_field": "url"
+    },
+    "date_rules": {
+      "date_format": "iso8601"
+    },
+    "rate_limit_delay": 1.0,
+    "concurrency": 1
+  },
+  {
+    "id": "weworkremotely_ai",
+    "name": "We Work Remotely AI/ML",
+    "type": "job",
+    "base_url": "https://weworkremotely.com",
+    "listing_urls": [
+      "https://weworkremotely.com/categories/remote-programming-jobs.rss"
+    ],
+    "crawl_interval_minutes": 60,
+    "timezone": "UTC",
+    "locale": "en_US",
+    "adapter_type": "rss",
+    "selectors": {
+      "title": "h1",
+      "company": ".company, .listing-header-container h2",
+      "location": ".location",
+      "salary": ".salary",
+      "body": "#job-details, .listing-container",
+      "date": "time"
+    },
+    "date_rules": {
+      "filter_keywords": [
+        "ai",
+        "machine learning",
+        "ml",
+        "nlp",
+        "llm",
+        "deep learning",
+        "artificial intelligence"
+      ]
+    },
+    "rate_limit_delay": 0.5,
+    "concurrency": 2
+  },
+  {
+    "id": "huggingface_jobs",
+    "name": "Hugging Face Jobs",
+    "type": "job",
+    "base_url": "https://huggingface.co",
+    "listing_urls": [
+      "https://huggingface.co/jobs"
+    ],
+    "crawl_interval_minutes": 120,
+    "timezone": "UTC",
+    "locale": "en_US",
+    "adapter_type": "html_listing",
+    "selectors": {
+      "item_container": "a[href^='/jobs/']",
+      "link": "",
+      "listing_title": "h3, .text-lg, span",
+      "listing_company": "span.company, span",
+      "title": "h1",
+      "company": ".company-name, h2",
+      "location": ".location, span[data-location]",
+      "salary": ".salary",
+      "body": "main, .job-description, .prose",
+      "date": "time"
+    },
+    "date_rules": {
+      "url_date_pattern": null
+    },
+    "rate_limit_delay": 0.5,
+    "concurrency": 2
+  },
+  {
+    "id": "yc_workatastartup_ai",
+    "name": "Work at a Startup AI (YC)",
+    "type": "job",
+    "base_url": "https://www.workatastartup.com",
+    "listing_urls": [
+      "https://www.workatastartup.com/companies?demographic=any&has_remote=any&industry=Artificial+Intelligence"
+    ],
+    "crawl_interval_minutes": 120,
+    "timezone": "America/Los_Angeles",
+    "locale": "en_US",
+    "adapter_type": "html_listing",
+    "selectors": {
+      "item_container": "div.job-details, a[href*='/jobs/']",
+      "link": "a[href*='/jobs/']",
+      "title": "h1, .job-name",
+      "company": ".company-name, .company-title",
+      "location": ".job-details-row, .location",
+      "salary": ".compensation, .salary",
+      "body": ".job-description, .content, main",
+      "date": "time, .posted-date"
+    },
+    "date_rules": {
+      "url_date_pattern": null
+    },
+    "rate_limit_delay": 0.5,
+    "concurrency": 2
+  }
+]
